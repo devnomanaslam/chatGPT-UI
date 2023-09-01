@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT Clone</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .container {
+            height: 100%;
+        }
+
+        .list_block {
+            width: 255px;
+            /* width: 25%; */
+
+            height: 100%;
+            background-color: #202123;
+            /* border: 1px solid red; */
+            /* left: 0;
+            bottom: 0; */
+            /* position: absolute; */
+
+            position: fixed;
+            /* width: 250px;
+            height: 100vh; */
+            left: 0;
+            right: 0;
+            overflow-y: scroll;
+            /* background-color: red; */
+            /* top: 60px; */
+
+        }
+
+        .list_block::-webkit-scrollbar {
+            display: none;
+        }
+
+        .inner_list_block {
+            padding: 5px;
+            /* padding-top: 1px; */
+        }
+
+        .new_topic_bt_main {}
+
+        .new_topic_btn {
+            /* width: 100%; */
+            padding: 12px 82px;
+            border-radius: 5px;
+            /* text-align: left; */
+            text-align: center;
+            /* display: inline-flex; */
+            position: fixed;
+            /* width: 24%; */
+
+            font-size: 15px;
+
+            background-color: #202123;
+            border: 1px solid #999ca5;
+            color: #999ca5;
+        }
+
+        .new_topic_btn:hover {
+            background-color: #2b2c2f;
+        }
+
+        .list_items {
+            margin-bottom: 6rem;
+            margin-top: 3rem;
+        }
+
+        .footer_list_item,
+        .list_item {
+            color: #fff;
+            padding: 10px;
+            /* border: 1px solid green; */
+            border-radius: 5px;
+            margin: 5px 0;
+
+            display: inline-flex;
+            width: 100%;
+        }
+
+        .footer_list_item i {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .list_item i {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .list_item:hover {
+            background-color: #2a2b32;
+        }
+
+        .chat_block {
+            /* border: 1px solid red;
+            width: 75%;
+            position: relative;
+            background-color: green;
+            display: block;
+            position: fixed;
+            right: 0;
+            bottom: 0;*/
+            height: 100%;
+            width: 82%;
+            /* margin: 60px 0 0 250px; */
+            /* padding: 0 30px; */
+            overflow-y: scroll;
+            position: fixed;
+            right: 0;
+            top: 0;
+            left: 255px;
+            /* height: 100vh; */
+            /* background-color: blue; */
+            background-color: #353641;
+        }
+
+        .footer_lists {}
+
+        .footer_list_item:hover {
+            background-color: #343541;
+        }
+
+        .fixed_list_footer {
+            position: fixed;
+            bottom: 0;
+            /* width: 24%; */
+            background-color: #202123;
+            width: 245px;
+        }
+
+        .input_footer {
+            position: absolute;
+            width: 82%;
+            bottom: 5px;
+            margin-left: 45px;
+        }
+
+        /* .btn_plus {
+            font-size: 18px;
+        }
+
+        .topic_btn_txt {
+            margin-left: 4rem;
+            font-size: 15px;
+        } */
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            /* border: 1px solid #ccc; */
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        #message-input {
+            flex: 1;
+            border: none;
+            resize: none;
+            height: auto;
+            min-height: 50px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .send-button {
+            /* background-color: #cecad0; */
+            /* color: #343541; */
+            color: #cecad0;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            /* font-size: 16px; */
+            cursor: pointer;
+
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        /* .send-button:hover {
+            background-color: #a29ea3;
+        } */
+        @media only screen and (max-width: 875px) {
+            .input_footer {
+                margin-left: 25px;
+            }
+        }
+
+        @media only screen and (max-width: 810px) {
+            .input_footer {
+                margin-left: 15px;
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .list_block {
+                display: none;
+            }
+
+            .chat_block {
+                width: 100%;
+                left: 0;
+            }
+
+            .input_footer {
+                margin: 0 10px;
+                width: 95%;
+            }
+
+            .input-container {
+                margin: 0 -7px 0 5px;
+            }
+
+            .chat_list_container {
+                padding: 20px 40px;
+                /* margin-left: -20px; */
+                /* width: 100%; */
+            }
+
+        }
+
+        @media only screen and (max-width: 350px) {
+            .input_footer {
+                width: 90%;
+            }
+        }
+
+        /* @media only screen and (max-width: 1000px) {
+            .list_block{
+                width: 27%;
+            }
+            .chat_block{
+                width: 73%;
+            }
+            .new_topic_btn{
+                width: 26%;
+            }
+            .fixed_list_footer{
+                width: 26%;
+            }
+        } */
+        .chat_list_container {
+            height: 85%;
+            padding: 20px;
+
+            height: 85%;
+            /* padding: 20px 125px; */
+            /* margin-left: -70px; */
+            margin-left: 0px;
+            /* border: 1px solid red; */
+            color: #cecad0;
+            /* width: 90%; */
+        }
+
+        .chat_list_container ul {
+            width: 93%;
+        }
+
+        @media only screen and (min-width: 1030px) {
+            .chat_list_container ul {
+                width: 100%;
+            }
+        }
+
+        .input_msg {
+            background-color: #40414f;
+            padding: 15px 45px 0px 5px;
+            color: #cecad0;
+            border-radius: 5px;
+        }
+
+        .my-prompt {
+            background-color: #343541;
+            border-radius: 10px;
+            padding: 10px;
+            border-left: 2px solid #e99f2f;
+            border-bottom: 0.5px solid grey;
+            margin: 10px 0;
+            border-top: 0.5px solid grey;
+            border-right: 0.5px solid grey;
+            display: flex;
+            align-items: center;
+        }
+
+        .my-prompt i,
+        .gpt-answer i {
+            margin-right: 20px;
+        }
+
+        .gpt-answer {
+            background-color: #444654;
+            border-radius: 10px;
+            padding: 10px;
+            border-right: 2px solid #e99f2f;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        @media only screen and (max-width: 980px) {
+            .chat_list_container ul {
+                width: 90%;
+            }
+        }
+
+        @media only screen and (max-width: 890px) {
+            .chat_list_container ul {
+                width: 85%;
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .chat_list_container ul {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="container">
+        <div class="list_block">
+            <div class="inner_list_block">
+                <div class="new_topic_bt_main">
+                    <button class="new_topic_btn">
+                        <!-- <span class="btn_plus">+</span>
+                            <span class="topic_btn_txt">New chat</span> -->
+                        + New chat
+                    </button>
+                </div>
+                <ul class="list_items">
+                    <li class="list_item"> <i class="material-icons">chat_bubble_outline</i> What is database?</li>
+                    <li class="list_item"> <i class="material-icons">chat_bubble_outline</i> What is database?</li>
+                    <li class="list_item"> <i class="material-icons">chat_bubble_outline</i> What is database?</li>
+                    <li class="list_item"> <i class="material-icons">chat_bubble_outline</i> What is database?</li>
+
+                </ul>
+                <div class="fixed_list_footer">
+                    <hr>
+                    <ul class="footer_lists">
+                        <li class="footer_list_item"><i class="material-icons">person_outline</i> Upgrade to plus</li>
+                        <li class="footer_list_item"><i class="material-icons">account_circle</i> User Email</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="chat_block">
+            <div class="chat_list_container">
+                <ul>
+                    <li class="my-prompt"><i class="material-icons">account_circle</i> What is python?</li>
+                    <li class="gpt-answer"><i class="material-icons">smart_toy</i> Python is programing language.</li>
+                    <li class="my-prompt"><i class="material-icons">account_circle</i> What is python?</li>
+                    <li class="gpt-answer"><i class="material-icons">smart_toy</i> Python is programing language.</li>
+                    <li>
+                        <div style="text-align: center;color: RED; margin-top: 2rem;">
+                            <h3>Original Design: <span
+                                    style="background-color: blue;color: #cecad0;">https://chat.openai.com/</span></h3>
+                            <h3>THE PURPOSE OF MAKING THIS DESIGN IS JUST TO SHOW THAT I HAVE DESIGN SKILLS.
+                            </h3>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="input_footer">
+                <div class="input-container">
+                    <textarea class="input_msg" id="message-input" placeholder="Send a message"></textarea>
+                    <i class="material-icons send-button">send</i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        const messageInput = document.getElementById('message-input');
+
+        messageInput.addEventListener('input', () => {
+            messageInput.style.height = 'auto';
+            messageInput.style.height = `${messageInput.scrollHeight}px`;
+        });
+
+    </script>
+</body>
+
+</html>
